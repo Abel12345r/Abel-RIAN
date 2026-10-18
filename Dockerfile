@@ -2,7 +2,7 @@ FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY LoveController.java LoveStoryApplication.java ./
-COPY index.html style.css ./
+COPY index.html style.css sw.js application.properties couple.jpg ./
 RUN mvn -B -DskipTests package
 
 FROM eclipse-temurin:17-jre

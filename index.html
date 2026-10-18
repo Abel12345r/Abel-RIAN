@@ -1,155 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#100916">
-  <meta name="description" content="A little glowing corner of the internet, made for Abel and Rian.">
-  <title>Abel &amp; Rian — Our Little World</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#100d0d">
+  <meta name="description" content="A private place for Abel and Rian's memories."><title>Abel &amp; Rian — Our Love Story</title><link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="ambient ambient-one" aria-hidden="true"></div>
-  <div class="ambient ambient-two" aria-hidden="true"></div>
-  <nav>
-    <a class="logo" href="#home">A <span>♡</span> R</a>
-    <div class="nav-links"><a href="#memories">Our story</a><a href="#notes">Love notes</a></div>
-    <span class="live-label"><i></i> our little world</span>
-  </nav>
-
+  <section id="loginScreen" class="login-screen" aria-labelledby="loginTitle">
+    <div class="login-stack"><div class="login-card"><p class="eyebrow">ABEL &amp; RIAN · OUR PRIVATE WORLD</p><h1 id="loginTitle">Our <em>Love Story</em></h1><p class="login-intro">A place where our memories live forever.</p>
+      <form id="loginForm"><label>Your name<select name="username" required><option value="Abel">Abel</option><option value="Rian">Rian</option></select></label><label>Our passkey<input type="password" name="password" autocomplete="current-password" required maxlength="128"></label><button class="gold-button" type="submit">Enter our story <span>♡</span></button><p id="loginStatus" class="status" aria-live="polite">Two hearts. One journey. Forever.</p></form>
+    </div><span class="login-signature">MADE WITH LOVE · ALWAYS</span></div>
+  </section>
+  <div id="appShell" hidden>
   <main>
-    <section class="hero" id="home">
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="heart" aria-hidden="true">♥</div>
-      <p class="eyebrow">A LITTLE PLACE THAT'S JUST OURS</p>
-      <h1>Two hearts.<br><span>One little universe.</span></h1>
-      <p class="intro">For all the things we want to remember, and all the little ways we say “I'm thinking of you.”</p>
-      <a class="button" href="#notes">Leave a little love <span>↗</span></a>
-      <div class="scroll-hint">SCROLL TO WANDER <span>↓</span></div>
+    <section id="home" class="hero">
+      <div class="hero-shade"></div><div class="hero-content"><p class="eyebrow">ABEL &amp; RIAN · EST. 17 JANUARY 2026</p><p id="greeting" class="greeting" aria-live="polite"></p><h1>Our <em>Love Story</em></h1><p class="hero-quote">“A place where our memories live forever.”</p><p class="hero-sub">Two hearts. One journey. Forever.</p><a class="gold-button" href="#notes">Explore our story <span>↓</span></a></div><div class="scroll-mark">A PRIVATE LITTLE WORLD</div>
     </section>
-
-    <section class="counter panel" aria-label="Our time together">
-      <p class="eyebrow">EVERY DAY, STILL CHOOSING YOU</p>
-      <h2>And the story keeps getting sweeter...</h2>
-      <div class="days-line"><span id="days">—</span><span class="days-heart">♡</span></div>
-      <p class="muted">days of us, and counting</p>
-      <p class="date-hint">Your anniversary is set to January 1, 2025. Change it in the page script whenever you like.</p>
-    </section>
-
-    <section id="memories" class="section">
-      <p class="eyebrow">CHAPTERS WE KEEP</p>
-      <h2>Little moments, <span>forever ours.</span></h2>
-      <p class="section-intro">The best stories are made of tiny things. Add your own memories to these cards anytime.</p>
-      <div class="memory-grid">
-        <article class="memory-card"><span class="memory-icon">✿</span><p class="card-kicker">CHAPTER ONE</p><h3>Our first meeting</h3><p>The beginning of something neither of us knew we needed.</p></article>
-        <article class="memory-card"><span class="memory-icon">✧</span><p class="card-kicker">THE GOOD STUFF</p><h3>Our best memory</h3><p>That one moment we can replay and still smile about.</p></article>
-        <article class="memory-card"><span class="memory-icon">☾</span><p class="card-kicker">ALWAYS CLOSE</p><h3>Until next time</h3><p>Even when we're apart, we're under the same sky.</p></article>
-      </div>
-    </section>
-
-    <section class="heartbeat-section">
-      <div class="heartbeat-copy"><p class="eyebrow">A TINY WAY TO SAY “I'M HERE”</p><h2>Send a little<br><span>heartbeat.</span></h2><p>Tap the button when you're thinking of each other. The number updates for both of you.</p></div>
-      <div class="heartbeat-action"><button id="heartbeatButton" class="heart-button" type="button" aria-label="Send a heartbeat"><span>♥</span></button><p class="heartbeat-count"><strong id="heartbeatCount">0</strong> little heartbeats sent</p><p id="heartbeatStatus" class="status" aria-live="polite">Your person will feel the love.</p></div>
-    </section>
-
-    <section id="notes" class="section notes-section">
-      <p class="eyebrow">WORDS TO COME BACK TO</p>
-      <h2>A note, <span>just for you.</span></h2>
-      <p class="section-intro">Leave a message for each other. Your notes appear here for both of you.</p>
-      <form id="noteForm" class="note-form">
-        <label for="sender">Your name</label><input id="sender" name="sender" placeholder="Who is this from?" required maxlength="40" autocomplete="name">
-        <label for="message">Your little message</label><textarea id="message" name="message" placeholder="Something you want them to know..." required maxlength="1000"></textarea>
-        <div class="form-bottom"><span id="formStatus" class="status" aria-live="polite">A little love goes a long way.</span><button class="button" type="submit">Send with love <span>♡</span></button></div>
-      </form>
-      <div id="notesList" class="notes-list" aria-live="polite"></div>
-    </section>
-  </main>
-  <footer><span>Made with <b>♥</b> for Abel &amp; Rian</span><span>Always your favorite notification.</span></footer>
-
+    <section id="notes" class="section notes-section"><p class="eyebrow">WORDS TO KEEP CLOSE</p><h2>Little Notes <em>From My Heart</em> <span class="gold">✧</span></h2><p class="section-intro">A few words for the person who makes every day warmer. Sign in to write and open notes meant for you.</p><div class="editor glass"><h3>Leave a note</h3><form id="noteForm"><label>To<select name="recipient" required><option value="Rian">Rian</option><option value="Abel">Abel</option></select></label><label>Your note<textarea name="message" maxlength="1200" placeholder="Write what you'd like them to remember…" required></textarea></label><button class="gold-button" type="submit">Seal this note <span>♡</span></button><p class="status" id="noteStatus" aria-live="polite"></p></form></div><div id="notesList" class="card-grid" aria-live="polite"></div></section>
+    <section id="days" class="days-section"><p class="eyebrow">EVERY DAY, STILL CHOOSING YOU</p><h2>Days of Us <em>and Counting</em> <span class="crimson">♥</span></h2><div id="dayCount" class="day-count">—</div><p class="section-intro">Every day with you is another memory worth keeping.</p><div class="countdown"><div><strong id="cdDays">00</strong><span>days</span></div><div><strong id="cdHours">00</strong><span>hours</span></div><div><strong id="cdMinutes">00</strong><span>minutes</span></div><div><strong id="cdSeconds">00</strong><span>seconds</span></div></div><p class="date-note">Counting down to our next January 17</p></section>
+    <section id="heartbeat" class="heartbeat-section"><div><p class="eyebrow">A LITTLE SIGN THAT I'M HERE</p><h2>Send a <em>Heartbeat</em></h2><p class="section-intro">Send a private signal to your person. They’ll see it the next time they’re here.</p></div><div class="heartbeat-action"><button id="heartbeatButton" class="heart-button" aria-label="Send a heartbeat">♥</button><p id="heartbeatStatus" class="status" aria-live="polite">A heartbeat, whenever you need one.</p><button id="enableNotifications" class="text-button" type="button">Enable alerts on this device</button></div></section>
+    <section id="surprises" class="section surprises-section"><p class="eyebrow">A LITTLE MYSTERY, JUST FOR YOU</p><h2>One Last <em>Surprise, Baby</em> ✧</h2><p class="section-intro">Letters, memories, plans, promises and all the lovely things we haven’t thought of yet.</p><div class="editor glass"><h3>Create a surprise</h3><form id="surpriseForm"><label>Title<input name="title" maxlength="100" placeholder="A little something for you" required></label><label>To<select name="recipient"><option>Rian</option><option>Abel</option></select></label><label>Your surprise<textarea name="body" maxlength="4000" placeholder="A letter, a plan, a memory…" required></textarea></label><button class="gold-button" type="submit">Wrap it up <span>♧</span></button><p id="surpriseStatus" class="status" aria-live="polite"></p></form></div><div id="surprisesList" class="card-grid"></div></section>
+    <section class="sign-in-banner"><p>Made with care, for Abel &amp; Rian.</p><button id="logoutButton" class="text-button" hidden>Sign out</button><p id="authStatus" class="status" aria-live="polite">Sign in to see your private notes and surprises.</p></section>
+  </main><footer>Our story, written one day at a time <span>♥</span></footer>
+  </div>
   <script>
-    const anniversary = new Date("2025-01-01T00:00:00");
-    const api = "/api/notes";
-    const days = Math.max(0, Math.floor((Date.now() - anniversary.getTime()) / 86400000));
-    document.getElementById("days").textContent = days.toLocaleString();
-
-    const notesList = document.getElementById("notesList");
-    async function loadNotes() {
-      try {
-        const response = await fetch(api);
-        if (!response.ok) throw new Error("Could not load notes");
-        const notes = await response.json();
-        notesList.replaceChildren();
-        if (!notes.length) {
-          const empty = document.createElement("p");
-          empty.className = "empty-state";
-          empty.textContent = "Your first little note is waiting to be written. ♡";
-          notesList.append(empty);
-          return;
-        }
-        [...notes].reverse().forEach(note => {
-          const card = document.createElement("article");
-          card.className = "note-card";
-          const author = document.createElement("h3");
-          author.textContent = note.sender;
-          const heart = document.createElement("span");
-          heart.className = "note-heart";
-          heart.textContent = "♥";
-          const body = document.createElement("p");
-          body.textContent = note.message;
-          card.append(author, heart, body);
-          notesList.append(card);
-        });
-      } catch {
-        notesList.textContent = "Notes will show up when the app is connected to its server.";
-      }
-    }
-
-    const heartbeatCount = document.getElementById("heartbeatCount");
-    async function loadHeartbeats() {
-      try {
-        const response = await fetch(`${api}/heartbeats`);
-        if (!response.ok) throw new Error();
-        heartbeatCount.textContent = (await response.json()).toLocaleString();
-      } catch { /* The feature becomes available when the API is online. */ }
-    }
-    document.getElementById("heartbeatButton").addEventListener("click", async event => {
-      const button = event.currentTarget;
-      const status = document.getElementById("heartbeatStatus");
-      button.disabled = true;
-      try {
-        const response = await fetch(`${api}/heartbeats`, { method: "POST" });
-        if (!response.ok) throw new Error();
-        heartbeatCount.textContent = (await response.json()).toLocaleString();
-        status.textContent = "Heartbeat sent. A little love is on its way. ♡";
-        button.classList.remove("pulse");
-        void button.offsetWidth;
-        button.classList.add("pulse");
-      } catch { status.textContent = "Couldn't send it just now. Try again in a moment."; }
-      finally { button.disabled = false; }
-    });
-
-    document.getElementById("noteForm").addEventListener("submit", async event => {
-      event.preventDefault();
-      const form = event.currentTarget;
-      const status = document.getElementById("formStatus");
-      const button = form.querySelector("button[type=submit]");
-      button.disabled = true;
-      status.textContent = "Sending your love...";
-      try {
-        const response = await fetch(api, {
-          method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ sender: form.sender.value.trim(), message: form.message.value.trim() })
-        });
-        if (!response.ok) throw new Error();
-        form.message.value = "";
-        status.textContent = "Your note is here. Consider them hugged. ♡";
-        await loadNotes();
-      } catch { status.textContent = "Couldn't send that just now. Please try again."; }
-      finally { button.disabled = false; }
-    });
-    loadNotes();
-    loadHeartbeats();
-    setInterval(() => { loadNotes(); loadHeartbeats(); }, 10000);
+  const $=s=>document.querySelector(s), api='/api';
+  const hour=new Date().getHours(), greeting=hour<12?'Hii Morning Babe':hour<17?'Hey GoodAfternoon Love':hour<21?'Yoww GoodEvening Babe':'Hii GoodNight Baby';
+  $('#greeting').textContent=greeting; setInterval(()=>{const h=new Date().getHours();$('#greeting').textContent=h<12?'Hii Morning Babe':h<17?'Hey GoodAfternoon Love':h<21?'Yoww GoodEvening Babe':'Hii GoodNight Baby'},60000);
+  function updateDates(){const now=new Date(), start=new Date(2026,0,17);$('#dayCount').textContent=Math.max(0,Math.floor((Date.now()-start.getTime())/86400000)).toLocaleString();let next=new Date(now.getFullYear(),0,17);if(next<=now)next=new Date(now.getFullYear()+1,0,17);let d=Math.max(0,next-now);[['cdDays',86400000],['cdHours',3600000],['cdMinutes',60000],['cdSeconds',1000]].forEach(([id,n])=>{const v=Math.floor(d/n);$('#'+id).textContent=String(id==='cdDays'?v:v% (id==='cdHours'?24:60)).padStart(2,'0');d-=v*n})}updateDates();setInterval(updateDates,1000);
+  let csrf='';async function request(path,opts={}){const r=await fetch(api+path,{credentials:'same-origin',...opts,headers:{...(opts.body?{'Content-Type':'application/json'}:{}),...((opts.method&&opts.method!=='GET')?{'X-Love-CSRF':csrf}:{}),...(opts.headers||{})}});if(r.status===401){$('#authStatus').textContent='Sign in to view private content.';throw Error('Please sign in first.')}if(!r.ok)throw Error((await r.text())||'Request failed.');return r.status===204?null:r.json()}
+  function makeCard(title,body,meta){const a=document.createElement('article');a.className='note-card';const h=document.createElement('h3');h.textContent=title;const p=document.createElement('p');p.textContent=body;const small=document.createElement('small');small.textContent=meta;a.append(h,p,small);return a}
+  async function refresh(){try{const [notes,surprises]=await Promise.all([request('/notes'),request('/surprises')]);$('#notesList').replaceChildren(...notes.map(n=>{const c=makeCard('A note for '+n.recipient,n.message,'From '+n.sender);c.classList.add('mystery');const edit=document.createElement('button');edit.className='text-button';edit.textContent='Edit my note';edit.hidden=n.sender!==localStorage.getItem('loveName');edit.onclick=async()=>{const next=prompt('Edit your note',n.message);if(next===null)return;try{await request('/notes/'+n.id,{method:'PUT',body:JSON.stringify({message:next})});refresh()}catch(err){$('#noteStatus').textContent=err.message}};c.append(edit);c.addEventListener('click',e=>{if(e.target!==edit)c.classList.add('revealed')},{once:true});return c}));$('#surprisesList').replaceChildren(...surprises.map(s=>{const c=makeCard('🎁 '+s.title,'Tap to reveal this surprise','For '+s.recipient+' · from '+s.sender);c.classList.add('mystery');c.addEventListener('click',()=>{c.querySelector('p').textContent=s.body;c.classList.add('revealed')},{once:true});if(s.sender===localStorage.getItem('loveName')){const edit=document.createElement('button');edit.className='text-button';edit.textContent='Edit my surprise';edit.onclick=async e=>{e.stopPropagation();const title=prompt('Edit title',s.title);if(title===null)return;const body=prompt('Edit surprise',s.body);if(body===null)return;try{await request('/surprises/'+s.id,{method:'PUT',body:JSON.stringify({title,body})});refresh()}catch(err){$('#surpriseStatus').textContent=err.message}};c.append(edit)}return c}));$('#authStatus').textContent='Signed in as '+localStorage.getItem('loveName')+'.';$('#logoutButton').hidden=false}catch{}}
+  function showApp(name,token){csrf=token;localStorage.setItem('loveName',name);$('#loginScreen').hidden=true;$('#appShell').hidden=false;$('#loginStatus').textContent='Two hearts. One journey. Forever.';refresh();pollHeartbeats()}
+  $('#loginForm').onsubmit=async e=>{e.preventDefault();const f=e.currentTarget,s=$('#loginStatus'),button=f.querySelector('button[type=submit]');button.disabled=true;s.textContent='Opening our little world…';try{const result=await request('/auth/login',{method:'POST',body:JSON.stringify({username:f.username.value,password:f.password.value})});showApp(result.name,result.csrf);f.password.value=''}catch(err){s.textContent=err instanceof TypeError?'Cannot reach the site server. Open this page from the running app URL and try again.':err.message}finally{button.disabled=false}};
+  $('#logoutButton').onclick=async()=>{try{await request('/auth/logout',{method:'POST'});localStorage.removeItem('loveName');csrf='';heartbeatPrimed=false;received.clear();$('#notesList').replaceChildren();$('#surprisesList').replaceChildren();$('#appShell').hidden=true;$('#loginScreen').hidden=false;$('#loginForm').elements.password.value='';$('#loginStatus').textContent='You are signed out. Come back in whenever you like.'}catch{}};
+  $('#noteForm').onsubmit=async e=>{e.preventDefault();const f=e.currentTarget,s=$('#noteStatus');try{await request('/notes',{method:'POST',body:JSON.stringify({recipient:f.recipient.value,message:f.message.value})});f.reset();s.textContent='Your note is sealed and saved.';refresh()}catch(err){s.textContent=err.message}};
+  $('#surpriseForm').onsubmit=async e=>{e.preventDefault();const f=e.currentTarget,s=$('#surpriseStatus');try{await request('/surprises',{method:'POST',body:JSON.stringify({title:f.title.value,recipient:f.recipient.value,body:f.body.value})});f.reset();s.textContent='Your surprise is wrapped and saved.';refresh()}catch(err){s.textContent=err.message}};
+  const received=new Set();let heartbeatPrimed=false;async function pollHeartbeats(){try{const events=await request('/heartbeats');if(!heartbeatPrimed){events.forEach(x=>received.add(x.id));heartbeatPrimed=true;return}for(const item of events){if(!received.has(item.id)){received.add(item.id);$('#heartbeatStatus').textContent='Your love sent you a heartbeat ♥';if(navigator.vibrate)navigator.vibrate([120,70,180]);if('Notification'in window&&Notification.permission==='granted')new Notification('A heartbeat from your love ♥',{body:'Your love sent you a heartbeat.'})}}}catch{}}
+  $('#enableNotifications').onclick=async()=>{if(!('Notification'in window)){ $('#heartbeatStatus').textContent='Notifications are not supported in this browser.';return }const permission=await Notification.requestPermission();$('#heartbeatStatus').textContent=permission==='granted'?'Alerts are enabled while this page is open.':'Notifications were not enabled.'};
+  $('#heartbeatButton').onclick=async e=>{const b=e.currentTarget,s=$('#heartbeatStatus');b.classList.add('pulse');try{await request('/heartbeats',{method:'POST'});s.textContent='Your heartbeat has been sent.'}catch(err){s.textContent=err.message}setTimeout(()=>b.classList.remove('pulse'),700)};
+  document.querySelector('.menu-toggle').onclick=e=>{const open=document.querySelector('.nav-links').classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',open)};document.querySelectorAll('.nav-links a').forEach(a=>a.onclick=()=>document.querySelector('.nav-links').classList.remove('open'));
+  if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});request('/auth/me').then(r=>showApp(r.name,r.csrf)).catch(()=>{});setInterval(()=>{if(!$('#appShell').hidden)pollHeartbeats()},12000);
   </script>
-</body>
-</html>
+</body></html>

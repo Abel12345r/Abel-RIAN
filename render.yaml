@@ -2,4 +2,15 @@ services:
   - type: web
     name: our-love-story
     runtime: docker
-    plan: free
+    plan: starter
+    disk:
+      name: love-story-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: LOVE_DB_PATH
+        value: /var/data/lovestory
+      - key: SESSION_COOKIE_SECURE
+        value: "true"
+      - key: LOVE_PASSKEY
+        sync: false

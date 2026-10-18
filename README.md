@@ -1,25 +1,33 @@
-# Abel & Rian — Our Little World
+# Abel & Rian — Our Love Story
 
-A small Spring Boot site for sharing love notes and sending a shared heartbeat.
+A Spring Boot website for a private shared space, with time of day greetings, relationship dates, private notes, surprises, and heartbeat activity.
 
-## Run locally
+## Local setup
 
-Requires Java 17 and Maven.
+Requires Java 17 and Maven. Configure your shared passkey in your shell before launching:
 
-```sh
+```powershell
+$env:LOVE_PASSKEY = '<set-your-private-passkey-locally>'
+$env:SESSION_COOKIE_SECURE = 'true'
 mvn spring-boot:run
 ```
 
-Open [http://localhost:8080](http://localhost:8080).
+Open `http://localhost:8080`. H2 stores data in `./lovestory.mv.db` by default. Keep this file private and back it up if you need to retain local data.
 
-## Deploy on Render
+The supplied couple photo is included as `couple.jpg` and packaged as `/couple.jpg` for the login and hero backgrounds.
 
-1. Push this repository to GitHub.
-2. In Render, choose **New → Blueprint**, connect the repository, and let Render read `render.yaml`.
-3. Deploy the `our-love-story` web service. Render builds the executable JAR and starts it on Render's assigned port.
+## Render deployment
 
-The page and API share one service, so no localhost URL or separate frontend setup is needed. Set the anniversary date in `index.html` (and keep `PageStructure.html` in sync if you use that copy).
+1. Push the project to GitHub and create a Render Blueprint from `render.yaml`.
+2. In Render, set the secret environment variable `LOVE_PASSKEY` to the shared passkey `<set-your-private-passkey-locally>`. Never commit this value.
+3. The blueprint configures a persistent disk mounted at `/var/data`, `LOVE_DB_PATH`, and secure session cookies. Persistent disks require a paid Render web service plan.
+4. The supplied `couple.jpg` is already included in the Docker build and static resources.
 
-## Shared data
+Render provides HTTPS and sets the application port. The page and API are served by the same Spring Boot service.
 
-Love notes and heartbeat counts are held in the running app's memory. Both visitors see updates while the service is running, but the data resets when Render restarts or redeploys the service. Use a database and persistent storage if you want the messages to last through restarts.
+## Security and feature notes
+
+- Login asks the visitor to identify as Abel or Rian and uses the same environment-configured passkey for both. Sessions use HTTP-only, same-site cookies; write requests require a session CSRF token. Failed attempts are rate limited by client IP.
+- Notes and surprises are stored in the H2 database. Users can view content associated with their account and edit only records they created. Surprise and note cards are visually sealed until opened.
+- Heartbeats are stored server-side and the recipient's open page checks for new ones periodically. Browser notifications and vibration depend on permission/support. This implementation does **not** send Web Push to a closed browser or offline device; that requires VAPID keys and a push delivery service, which have not been configured.
+- The default H2 database is appropriate for this small deployment. Back up the Render disk. For deployments that need managed database backups or multiple app instances, migrate to PostgreSQL.
