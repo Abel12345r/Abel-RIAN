@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.lovestory</groupId>
@@ -27,17 +28,19 @@
     </dependencies>
 
     <build>
-        <!-- This project keeps its original source files at the repository root. -->
         <sourceDirectory>${project.basedir}</sourceDirectory>
+
         <resources>
             <resource>
                 <directory>${project.basedir}</directory>
+                <targetPath>static</targetPath>
                 <includes>
                     <include>index.html</include>
                     <include>style.css</include>
                 </includes>
             </resource>
         </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
