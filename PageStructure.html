@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100916">
+  <meta name="description" content="A little glowing corner of the internet, made for Abel and Rian.">
+  <title>Abel &amp; Rian — Our Little World</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <nav>
+    <a class="logo" href="#home">A <span>♡</span> R</a>
+    <div class="nav-links"><a href="#memories">Our story</a><a href="#notes">Love notes</a></div>
+    <span class="live-label"><i></i> our little world</span>
+  </nav>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="heart" aria-hidden="true">♥</div>
+      <p class="eyebrow">A LITTLE PLACE THAT'S JUST OURS</p>
+      <h1>Two hearts.<br><span>One little universe.</span></h1>
+      <p class="intro">For all the things we want to remember, and all the little ways we say “I'm thinking of you.”</p>
+      <a class="button" href="#notes">Leave a little love <span>↗</span></a>
+      <div class="scroll-hint">SCROLL TO WANDER <span>↓</span></div>
+    </section>
+
+    <section class="counter panel" aria-label="Our time together">
+      <p class="eyebrow">EVERY DAY, STILL CHOOSING YOU</p>
+      <h2>And the story keeps getting sweeter...</h2>
+      <div class="days-line"><span id="days">—</span><span class="days-heart">♡</span></div>
+      <p class="muted">days of us, and counting</p>
+      <p class="date-hint">Your anniversary is set to January 1, 2025. Change it in the page script whenever you like.</p>
+    </section>
+
+    <section id="memories" class="section">
+      <p class="eyebrow">CHAPTERS WE KEEP</p>
+      <h2>Little moments, <span>forever ours.</span></h2>
+      <p class="section-intro">The best stories are made of tiny things. Add your own memories to these cards anytime.</p>
+      <div class="memory-grid">
+        <article class="memory-card"><span class="memory-icon">✿</span><p class="card-kicker">CHAPTER ONE</p><h3>Our first meeting</h3><p>The beginning of something neither of us knew we needed.</p></article>
+        <article class="memory-card"><span class="memory-icon">✧</span><p class="card-kicker">THE GOOD STUFF</p><h3>Our best memory</h3><p>That one moment we can replay and still smile about.</p></article>
+        <article class="memory-card"><span class="memory-icon">☾</span><p class="card-kicker">ALWAYS CLOSE</p><h3>Until next time</h3><p>Even when we're apart, we're under the same sky.</p></article>
+      </div>
+    </section>
+
+    <section class="heartbeat-section">
+      <div class="heartbeat-copy"><p class="eyebrow">A TINY WAY TO SAY “I'M HERE”</p><h2>Send a little<br><span>heartbeat.</span></h2><p>Tap the button when you're thinking of each other. The number updates for both of you.</p></div>
+      <div class="heartbeat-action"><button id="heartbeatButton" class="heart-button" type="button" aria-label="Send a heartbeat"><span>♥</span></button><p class="heartbeat-count"><strong id="heartbeatCount">0</strong> little heartbeats sent</p><p id="heartbeatStatus" class="status" aria-live="polite">Your person will feel the love.</p></div>
+    </section>
+
+    <section id="notes" class="section notes-section">
+      <p class="eyebrow">WORDS TO COME BACK TO</p>
+      <h2>A note, <span>just for you.</span></h2>
+      <p class="section-intro">Leave a message for each other. Your notes appear here for both of you.</p>
+      <form id="noteForm" class="note-form">
+        <label for="sender">Your name</label><input id="sender" name="sender" placeholder="Who is this from?" required maxlength="40" autocomplete="name">
+        <label for="message">Your little message</label><textarea id="message" name="message" placeholder="Something you want them to know..." required maxlength="1000"></textarea>
+        <div class="form-bottom"><span id="formStatus" class="status" aria-live="polite">A little love goes a long way.</span><button class="button" type="submit">Send with love <span>♡</span></button></div>
+      </form>
+      <div id="notesList" class="notes-list" aria-live="polite"></div>
+    </section>
+  </main>
+  <footer><span>Made with <b>♥</b> for Abel &amp; Rian</span><span>Always your favorite notification.</span></footer>
+
+  <script>
+    const anniversary = new Date("2025-01-01T00:00:00");
+    const api = "/api/notes";
+    const days = Math.max(0, Math.floor((Date.now() - anniversary.getTime()) / 86400000));
+    document.getElementById("days").textContent = days.toLocaleString();
+
+    const notesList = document.getElementById("notesList");
+    async function loadNotes() {
+      try {
+        const response = await fetch(api);
+        if (!response.ok) throw new Error("Could not load notes");
+        const notes = await response.json();
+        notesList.replaceChildren();
+        if (!notes.length) {
+          const empty = document.createElement("p");
+          empty.className = "empty-state";
+          empty.textContent = "Your first little note is waiting to be written. ♡";
+          notesList.append(empty);
+          return;
+        }
+        [...notes].reverse().forEach(note => {
+          const card = document.createElement("article");
+          card.className = "note-card";
+          const author = document.createElement("h3");
+          author.textContent = note.sender;
+          const heart = document.createElement("span");
+          heart.className = "note-heart";
+          heart.textContent = "♥";
+          const body = document.createElement("p");
+          body.textContent = note.message;
+          card.append(author, heart, body);
+          notesList.append(card);
+        });
+      } catch {
+        notesList.textContent = "Notes will show up when the app is connected to its server.";
+      }
+    }
+
+    const heartbeatCount = document.getElementById("heartbeatCount");
+    async function loadHeartbeats() {
+      try {
+        const response = await fetch(`${api}/heartbeats`);
+        if (!response.ok) throw new Error();
+        heartbeatCount.textContent = (await response.json()).toLocaleString();
+      } catch { /* The feature becomes available when the API is online. */ }
+    }
+    document.getElementById("heartbeatButton").addEventListener("click", async event => {
+      const button = event.currentTarget;
+      const status = document.getElementById("heartbeatStatus");
+      button.disabled = true;
+      try {
+        const response = await fetch(`${api}/heartbeats`, { method: "POST" });
+        if (!response.ok) throw new Error();
+        heartbeatCount.textContent = (await response.json()).toLocaleString();
+        status.textContent = "Heartbeat sent. A little love is on its way. ♡";
+        button.classList.remove("pulse");
+        void button.offsetWidth;
+        button.classList.add("pulse");
+      } catch { status.textContent = "Couldn't send it just now. Try again in a moment."; }
+      finally { button.disabled = false; }
+    });
+
+    document.getElementById("noteForm").addEventListener("submit", async event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const status = document.getElementById("formStatus");
+      const button = form.querySelector("button[type=submit]");
+      button.disabled = true;
+      status.textContent = "Sending your love...";
+      try {
+        const response = await fetch(api, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sender: form.sender.value.trim(), message: form.message.value.trim() })
+        });
+        if (!response.ok) throw new Error();
+        form.message.value = "";
+        status.textContent = "Your note is here. Consider them hugged. ♡";
+        await loadNotes();
+      } catch { status.textContent = "Couldn't send that just now. Please try again."; }
+      finally { button.disabled = false; }
+    });
+    loadNotes();
+    loadHeartbeats();
+    setInterval(() => { loadNotes(); loadHeartbeats(); }, 10000);
+  </script>
+</body>
+</html>
